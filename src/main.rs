@@ -2,7 +2,6 @@ pub mod git;
 use std::collections::HashSet;
 use regex::Regex;
 use time::OffsetDateTime;
-use reqwest::blocking::Client;
 
 fn download_current_css(repo_url: &str, repo_path: &str) -> Result<(), ()> {
     git::clone(repo_url, repo_path).expect("Failed to clone repo");
