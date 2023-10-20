@@ -2,13 +2,14 @@ pub mod git;
 use std::collections::HashSet;
 use regex::Regex;
 use time::OffsetDateTime;
+use reqwest::blocking::Client;
 
 fn download_current_css(repo_url: &str, repo_path: &str) -> Result<(), ()> {
     git::clone(repo_url, repo_path).expect("Failed to clone repo");
     git::pull(repo_path).unwrap();
 
-    let css_regex = Regex::new(r#"<link rel=\"stylesheet\" href=\"(\/assets\/([0-9a-f]{3}\.[0-9a-f]{20}\.css))\">"#).unwrap();
-    let req = reqwest::blocking::get("https://discord.com/@me");
+    let css_regex = Regex::new(r#"<link rel=\"stylesheet\" href=\"(\/assets\/([0-9a-f]{5}\.[0-9a-f]{20}\.css))\""#).unwrap();
+    let req = reqwest::blocking::get("https://discord.com/channels/@me");
     if req.is_ok() {
         let res = req.unwrap().text().unwrap();
 
