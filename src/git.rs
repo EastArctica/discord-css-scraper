@@ -1,6 +1,6 @@
 use std::{process::Command, env, path::Path};
 
-pub fn clone(url: &str, path: &str) -> std::io::Result<()> {
+pub fn clone(url: &str, path: &str, branch: &str) -> std::io::Result<()> {
     if Path::new(format!("{}/.git/HEAD", path).as_str()).is_file() {
         // Git repo already exists, assume it's correct.
         Ok(())
@@ -9,6 +9,8 @@ pub fn clone(url: &str, path: &str) -> std::io::Result<()> {
             .arg("clone")
             .arg(url)
             .arg(path)
+            .arg("-b")
+            .arg(branch)
             .status()?;
         Ok(())
     }
